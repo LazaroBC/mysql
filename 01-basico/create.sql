@@ -29,3 +29,9 @@ CREATE TABLE entradas (
     CONSTRAINT fk_entrada_usuario FOREIGN KEY(usuario_id) REFERENCES usuarios (id),
     CONSTRAINT fk_entrada_categoria FOREIGN KEY(categoria_id) REFERENCES categorias (id)
 )ENGINE=InnoDb;
+
+// UPDATE
+
+UPDATE usuarios
+  SET pasword='662142223' , email='albesanch@mimail.com'
+  WHERE nombre='Alberto Sanchez'

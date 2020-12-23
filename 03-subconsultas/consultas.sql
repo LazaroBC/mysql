@@ -15,3 +15,28 @@ SELECT * FROM usuarios WHERE id NOT IN (SELECT usuario_id FROM entradas);
 
 SELECT nombre, apellidos FROM usuarios WHERE id IN 
     (SELECT usuario_id FROM entradas WHERE titulo LIKE "%GTA%");
+
+/* Sacar todas las entradas de la categoría acción */
+SELECT categoria_id, titulo FROM entradas WHERE categoria_id 
+    IN (SELECT id FROM categorias WHERE nombre = 'accion');
+
+/* Mostrar las categorías con más de tres entradas */
+SELECT nombre FROM categorias WHERE 
+    id IN  (SELECT categoria_id FROM  entradas GROUP BY categoria_id HAVING COUNT(categoria_id) >= 4);
+
+SELECT * FROM categorias WHERE 
+    id IN  (SELECT categoria_id FROM  entradas GROUP BY categoria_id HAVING COUNT(categoria_id) >= 3);    
+
+/* Mostrar los usuarios que crearon una entrada un martes */
+SELECT * FROM usuarios WHERE id IN 
+    (SELECT usuario_id FROM entradas WHERE DAYOFWEEK(fecha)=5);
+
+/* Mostrar el nombre del usuario que tenga más entradas */
+SELECT CONCAT(nombre, ' ', apellidos) AS 'Usuario con más entradas' FROM usuarios WHERE id =
+    (SELECT usuario_id FROM entradas GROUP BY usuario_id ORDER BY  COUNT(id) DESC LIMIT 1);
+
+/* Mostrar las categorías con entradas */
+SELECT * FROM categorias WHERE id IN (SELECT categoria_id FROM entradas);
+
+/* Mostrar las categorías sin entradas */
+SELECT * FROM categorias WHERE id NOT IN (SELECT categoria_id FROM entradas);
